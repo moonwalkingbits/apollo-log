@@ -7,7 +7,7 @@
 
 import { expectAssignable } from "tsd";
 
-import { LogHandlerInterface, LogLevel, Logger, LoggerBuilder, StreamHandler } from ".";
+import { LogHandlerInterface, LogLevel, Logger, LoggerBuilder, LoggerInterface, StreamHandler } from ".";
 
 const handler = new StreamHandler(process.stdout);
 
@@ -20,6 +20,7 @@ const logger = new LoggerBuilder()
     .build();
 
 expectAssignable<Logger>(logger);
+expectAssignable<LoggerInterface>(logger);
 expectAssignable<LogHandlerInterface>(logger);
 logger.log(LogLevel.INFO, "");
 logger.log(LogLevel.INFO, "", {});

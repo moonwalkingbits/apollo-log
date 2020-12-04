@@ -34,9 +34,98 @@ declare interface LogHandlerInterface {
 }
 
 /**
+ * An interface representing a logger.
+ */
+declare interface LoggerInterface {
+    /**
+     * Log with an arbitrary level.
+     *
+     * @param level Log level.
+     * @param message Message to log.
+     * @param Context to render message in.
+     */
+    log(level: LogLevel, message: string, context?: {[key: string]: any}): void;
+
+    /**
+     * System is unusable.
+     *
+     * @param message Message to log.
+     * @param Context to render message in.
+     */
+    emergency(message: string, context?: {[key: string]: any}): void;
+
+    /**
+     * Action must be taken immediately.
+     *
+     * Example: Entire website down, database unavailable, etc. This should
+     * trigger the SMS alerts and wake you up.
+     *
+     * @param message Message to log.
+     * @param Context to render message in.
+     */
+    alert(message: string, context?: {[key: string]: any}): void;
+
+    /**
+     * Critical conditions.
+     *
+     * Example: Application component unavailable, unexpected exception.
+     *
+     * @param message Message to log.
+     * @param Context to render message in.
+     */
+    critical(message: string, context?: {[key: string]: any}): void;
+
+    /**
+     * Runtime errors that do not require immediate action but should typically
+     * be logged and monitored.
+     *
+     * @param message Message to log.
+     * @param Context to render message in.
+     */
+    error(message: string, context?: {[key: string]: any}): void;
+
+    /**
+     * Exceptional occurrences that are not errors.
+     *
+     * Example: Use of deprecated APIs, poor use of an API, undesireble things
+     * that are not necessarily wrong.
+     *
+     * @param message Message to log.
+     * @param Context to render message in.
+     */
+    warning(message: string, context?: {[key: string]: any}): void;
+
+    /**
+     * Normal but significant events.
+     *
+     * @param message Message to log.
+     * @param Context to render message in.
+     */
+    notice(message: string, context?: {[key: string]: any}): void;
+
+    /**
+     * Interesting events.
+     *
+     * Example: User logs in, SQL logs.
+     *
+     * @param message Message to log.
+     * @param Context to render message in.
+     */
+    info(message: string, context?: {[key: string]: any}): void;
+
+    /**
+     * Detailed debug information.
+     *
+     * @param message Message to log.
+     * @param Context to render message in.
+     */
+    debug(message: string, context?: {[key: string]: any}): void;
+}
+
+/**
  * A logger instance only delegates all calls to its registered handlers.
  */
-declare class Logger implements LogHandlerInterface {
+declare class Logger implements LogHandlerInterface, LoggerInterface {
     /**
      * Create a new logger instance.
      *
@@ -182,5 +271,6 @@ export {
     LogLevel,
     Logger,
     LoggerBuilder,
+    LoggerInterface,
     StreamHandler
 };
